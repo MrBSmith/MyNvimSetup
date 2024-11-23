@@ -1,4 +1,5 @@
 return {
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
@@ -19,4 +20,8 @@ return {
             },
         })
     end
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+  },
 }
