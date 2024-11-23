@@ -8,6 +8,15 @@ return {
             ensure_installed = { "lua", "zig", "gdscript" },
             highlight = { enable = true },
             indent = { enable = true },
+            incremental_selection = {
+              enable = true,
+              keymaps = {
+                init_selection = "<Leader>is",
+                node_incremental = "<Leader>ni",
+                scope_incremental = "<Leader>si",
+                node_decremental = "<Leader>nd"
+              },
+            },
         })
     end
 }
