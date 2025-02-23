@@ -16,6 +16,8 @@ return {
   {
     "nvim-telescope/telescope-ui-select.nvim",
     config = function()
+      local actions = require("telescope.actions")
+
       require("telescope").setup({
         extensions = {
           ["ui-select"] = {
@@ -25,10 +27,12 @@ return {
         defaults = {
           mappings = {
             i = {
-              ["<C-w>"] = require("telescope.actions").select_vertical,
+              ["<C-s>"] = actions.select_vertical,
+              ["<C-h>"] = actions.select_horizontal,
             },
             n = {
-              ["<C-w>"] = require("telescope.actions").select_vertical,
+              ["s"] = actions.select_vertical,
+              ["h"] = actions.select_horizontal,
             },
           },
         },
