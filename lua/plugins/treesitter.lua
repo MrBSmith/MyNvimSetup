@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
+    build = ":tsupdate",
     config = function()
         local config = require("nvim-treesitter.configs")
         config.setup({
@@ -12,10 +12,10 @@ return {
             incremental_selection = {
               enable = true,
               keymaps = {
-                init_selection = "<Leader>is",
-                node_incremental = "<Leader>ni",
-                scope_incremental = "<Leader>si",
-                node_decremental = "<Leader>nd"
+                init_selection = "<leader>is",
+                node_incremental = "<leader>ni",
+                scope_incremental = "<leader>si",
+                node_decremental = "<leader>nd"
               },
             },
         textobjects = {
