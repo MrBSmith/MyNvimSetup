@@ -21,6 +21,8 @@ vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", { noremap = true })
 
 local map = vim.keymap.set
 
+vim.keymap.set("n", "-", "<cmd>Oil<CR>")
+
 -- Remap demi page up/down to recenter the cursor in the middle of the screen
 map("n", "<C-d>", "<C-d>zz", { noremap = true })
 map("n", "<C-u>", "<C-u>zz", { noremap = true })
