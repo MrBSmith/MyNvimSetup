@@ -40,6 +40,7 @@ return {
                 }
             end
             )
+
             -- search for scripts
             vim.keymap.set("n", "<leader>fs", function()
                 builtin.find_files {
@@ -80,6 +81,14 @@ return {
             end
             )
 
+            -- Live grep current word in scripts
+            vim.keymap.set("n", "<leader>ggs", function()
+                builtin.grep_string {
+                    file_ignore_patterns = {"%.uid", "%.tscn", "%.import", "%.tres", "%.tmp"},
+                }
+            end
+            )
+            
             -- Live grep in config files
             vim.keymap.set("n", "<leader>gc", function()
                 builtin.live_grep {
