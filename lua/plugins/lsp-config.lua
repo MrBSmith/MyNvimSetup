@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-               ensure_installed = { "lua_ls", "zls" }
+               ensure_installed = { "lua_ls", "zls", "csharp-ls" }
             })
         end
     },
@@ -27,9 +27,12 @@ return {
             lspconfig.gdscript.setup({
                 capabilities = capabilities
             })
+            lspconfig.csharp.setup({})
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-            vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {})
+            vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
+            vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
+            vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
             vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', {})
 			vim.diagnostic.config({ virtual_text = true })
         end

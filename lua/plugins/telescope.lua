@@ -12,12 +12,25 @@ return {
             local builtin = require("telescope.builtin")
             local actions = require("telescope.actions")
             local themes = require("telescope.themes")
+            local zig_path = "C:/Zig/zig-x86_64-windows-0.15.1/lib/std"
 
             require("telescope").setup({
                 extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "case_sensitive",
+                    },
                     ["ui-select"] = {
                         themes.get_dropdown({}),
                     },
+                },
+                pickers = {
+                    find_files = {
+                        find_command = { "fd", "--type", "f", "--case-sensitive", "--strip-cwd-prefix" },
+                        case_mode = "case_sensitive",
+                    }
                 },
                 defaults = {
                     mappings = {
@@ -33,10 +46,10 @@ return {
                 },
             })
 
-            -- search for files
+
             vim.keymap.set("n", "<leader>ff", function()
                 builtin.find_files {
-                    file_ignore_patterns = {"%.uid", "%.import", "%.tmp"}
+                    file_ignore_patterns = {"%.uid", "%.import", "%.tmp", "%.png", "%.ogg", "%.wav"},
                 }
             end
             )
@@ -44,13 +57,21 @@ return {
             -- search for scripts
             vim.keymap.set("n", "<leader>fs", function()
                 builtin.find_files {
-                    file_ignore_patterns = {"%.uid", "%.tscn", "%.import", "%.tres", "%.tmp"},
+                    file_ignore_patterns = {"%.uid", "%.tscn", "%.import", "%.tres", "%.tmp", "%.png", "%.wav", "%.ogg", "%.res"},
+                }
+            end
+            )
+
+            -- search in zig std
+            vim.keymap.set("n", "<leader>fz", function()
+                builtin.find_files {
+                    cwd = zig_path
                 }
             end
             )
 
             -- Search for nvim config
-            vim.keymap.set("n", "<leader>fc", function()
+            vim.keymap.set("n", "<leader>fv", function()
                 builtin.find_files {
                     cwd = vim.fn.stdpath("config")
                 }
@@ -68,7 +89,10 @@ return {
             -- Live grep in files
             vim.keymap.set("n", "<leader>gg", function()
                 builtin.live_grep {
-                    file_ignore_patterns = {"%.uid", "%.import", "%.tmp"}
+                    file_ignore_patterns = {"%.uid", "%.import", "%.tmp"},
+                    additional_args = function()
+                        return { "--case-sensitive" }  -- or "--ignore-case"
+                    end,
                 }
             end
             )
@@ -88,7 +112,15 @@ return {
                 }
             end
             )
-            
+
+            -- Live grep in zig std files
+            vim.keymap.set("n", "<leader>gz", function()
+                builtin.live_grep {
+                    cwd = zig_path
+                }
+            end
+            )
+
             -- Live grep in config files
             vim.keymap.set("n", "<leader>gc", function()
                 builtin.live_grep {
@@ -103,6 +135,18 @@ return {
                     cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
                 }
             end
+            )
+
+            -- Browse for functions using the lsp
+            vim.keymap.set("n", "<leader>fn", function()
+                builtin.lsp_document_symbols({ symbols = { "function", "method"} })
+            end
+            )
+
+            -- Browse for functions using the lsp
+            vim.keymap.set("n", "<leader>fc", function()
+                builtin.lsp_document_symbols({ symbols = "Constant" })
+            end, { desc = "Fuzzy find all constant declarations" }
             )
 
             require("telescope").load_extension("ui-select")
